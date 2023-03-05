@@ -1,0 +1,20 @@
+{
+  "name": "game_play",
+  "version": "1.0.0",
+  "description": "练习面对对象思维",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel ./src/index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "parcel": "^2.0.0-rc.0"
+  },
+  "staticFiles": {
+    "staticPath": [
+      "src/assets"
+    ]
+  }
+}

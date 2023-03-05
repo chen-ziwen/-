@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏人物行走</title>
+</head>
+
+<body>
+    <div class="back-box">
+        <canvas id="canvas" width="1920" height="1080"></canvas>
+    </div>
+</body>
+
+<script type="module">
+    import CreateRole from './action/role';
+    // 因为四个方向的素材帧图片素材都为下左右上，所以内部设置好方向就好了
+    import imgUrl from './assets/girl.png'; // 8帧女孩
+    import heroUrl from './assets/hero.png'// 3帧武士
+    import dragonUrl from './assets/dragon.png'; // 龙4帧
+    const role = new CreateRole({
+        x: 0, // x坐标
+        y: 0, // y坐标
+        width: 48, // 每一帧的宽度
+        height: 96, // 每一帧的高度
+        img: imgUrl, // 图片路径
+        frameCount: 8, // 总共多少帧
+        ticksFrame: 5, // 动画切换帧的速率
+        realX: 3, // 左右移动速度
+        realY: 3, // 上下移动速度
+    });
+    console.log('role', role);
+    const hero = new CreateRole({
+        x: 0,
+        y: 0,
+        width: 32,
+        height: 32,
+        img: heroUrl,
+        frameCount: 3,
+        ticksFrame: 5,
+    })
+
+    const dragon = new CreateRole({
+        x: 0,
+        y: 0,
+        width: 48,
+        height: 60,
+        img: dragonUrl,
+        frameCount: 4,
+        ticksFrame: 5,
+    })
+    // 创建canvas上下文
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext("2d");
+
+    function game() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        role.update(); // 更新人物状态
+        role.render(ctx); // 渲染人物到画布
+        // dragon.update();
+        // dragon.render(ctx);
+        // hero.update();
+        // hero.render(ctx);
+        requestAnimationFrame(game);
+    }
+    game();
+
+
+</script>
+<style>
+    .back-box {
+        width: 100vw;
+        height: 100vh;
+        background: url(./assets/back.png) no-repeat;
+        background-size: cover;
+    }
+</style>
+
+</html>

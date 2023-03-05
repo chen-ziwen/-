@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏角色行走</title>
+</head>
+
+<body>
+    <div class="back">
+        <div class="box">
+            <img class="girl" src="./assets/girl.png">
+        </div>
+    </div>
+</body>
+
+<script type="module">
+    // import { walkConfig } from './action/walk.ts';
+    // 每张图片宽48，高96 一个方向的动作有8帧，总共四个方向
+    window.addEventListener('load', () => {
+        test()
+        let offset = 0; // 偏移值
+        let offsetValue = '0px'; // 图片偏移值 
+        // 四个方向都不触发
+        const position = {
+            top: false,
+            bottom: false,
+            left: false,
+            right: false,
+        }
+        let judge = true;
+        let timer = null;
+        // 0 96 192 288
+        const box = document.querySelector('.box');
+        const girl = document.querySelector('.girl');
+
+        function run() {
+            offsetValue = -offset + 'px';
+            offset += 48;
+            if (offset >= 48 * 8) {
+                offset = 0;
+            }
+            if (girl) {
+                girl.style.marginLeft = offsetValue;
+            }
+        }
+
+        // 结束动画帧
+        function endMove() {
+            judge = true;
+            girl.style.marginLeft = '0px'; // 人物图片回到第一帧
+            if (timer) {
+                clearInterval(timer);
+            }
+        }
+
+        // 开始动画帧
+        function startMove() {
+            if (judge) {
+                judge = false; // 执行一次锁住定时器 不会再次执行 除非上次的定时器结束 
+                timer = setInterval(run, 80);
+            }
+        }
+
+        // 将它包裹在函数内部
+        let timerStop = setInterval(() => {
+            if (position.top) {
+                girl.style.marginTop = -288 + 'px'; // 向上走
+                box.style.top = box.offsetTop - 2 + "px";
+                startMove();
+            } else if (position.bottom) {
+                girl.style.marginTop = 0 + 'px'; // 向下走
+                box.style.top = box.offsetTop + 2 + "px";
+                startMove();
+            } else if (position.left) {
+                girl.style.marginTop = -96 + 'px'; // 向左走
+                box.style.left = box.offsetLeft - 2 + "px";
+                startMove();
+            } else if (position.right) {
+                girl.style.marginTop = -192 + 'px'; // 向右走
+                box.style.left = box.offsetLeft + 2 + "px";
+                startMove();
+            }
+        }, 30);
+
+
+        window.addEventListener('keydown', (event) => {
+            // 有一个问题 放在最后一个的即使为true 按下别的按键时，也会触发其他所有的案件，如果放在第一个，那么后续所有按键都无法触发
+            switch (event.keyCode) {
+                case 87: // 上
+                    position.top = true;
+                    break;
+                case 83: // 下
+                    position.bottom = true;
+                    break;
+                case 65: // 左
+                    position.left = true;
+                    break;
+                case 68: // 右
+                    position.right = true;
+                    break;
+            }
+        })
+
+        window.addEventListener('keyup', (event) => {
+            switch (event.keyCode) {
+                case 87:
+                    position.top = false;
+                    endMove();
+                    break;
+                case 83:
+                    position.bottom = false;
+                    endMove();
+                    break;
+                case 65:
+                    position.left = false;
+                    endMove();
+                    break;
+                case 68:
+                    position.right = false;
+                    endMove();
+            }
+        })
+    })    
+</script>
+
+<style>
+    .back {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        background-image: url(./assets/back.png);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .box {
+        position: absolute;
+        width: 48px;
+        height: 96px;
+        overflow: hidden;
+    }
+</style>
+
+</html>
