@@ -9,7 +9,7 @@
 53D:\my_object\game_play\node_modules\lmdb\dependencies133224998929609439 1
 52D:\my_object\game_play\node_modules\@parcel\core\src133224998911828657 1
 77D:\my_object\game_play\node_modules\@parcel\reporter-dev-server\src\Server.js133224998914200722 0
-27D:\my_object\game_play\dist133225040903012999 1
+27D:\my_object\game_play\dist133225043643896644 1
 72D:\my_object\game_play\node_modules\cosmiconfig\dist\ExplorerBase.js.map133224998926921455 0
 58D:\my_object\game_play\node_modules\@parcel\diagnostic\src133224998912057889 1
 33D:\my_object\game_play\src\action133225040638720589 1
@@ -21,7 +21,7 @@
 73D:\my_object\game_play\node_modules\@parcel\core\test\Environment.test.js133224998911838623 0
 55D:\my_object\game_play\node_modules\fill-range\index.js133224998928197821 0
 81D:\my_object\game_play\node_modules\@parcel\packager-js\lib\GlobalOutputFormat.js133224998913951554 0
-35D:\my_object\game_play\package.json133224998931952255 0
+35D:\my_object\game_play\package.json133225043826584609 0
 50D:\my_object\game_play\node_modules\csso\lib\clean133224998927629721 1
 71D:\my_object\game_play\node_modules\type-fest\source\readonly-deep.d.ts133224998931573521 0
 83D:\my_object\game_play\node_modules\@swc\helpers\lib\_object_destructuring_empty.js133224998924035380 0
@@ -439,7 +439,7 @@
 40D:\my_object\game_play\node_modules\svgo133224998931005422 1
 45D:\my_object\game_play\node_modules\nth-check133224998930317072 1
 90D:\my_object\game_play\node_modules\@parcel\node-resolver-core\test\fixture\nested\test.js133224998912785459 0
-38D:\my_object\game_play\dist\index.html133225040902584433 0
+38D:\my_object\game_play\dist\index.html133225043643488013 0
 50D:\my_object\game_play\node_modules\ordered-binary133224998930366905 1
 76D:\my_object\game_play\node_modules\@parcel\package-manager\lib\index.js.map133224998913812021 0
 69D:\my_object\game_play\node_modules\mdn-data\css\syntaxes.schema.json133224998929838672 0
@@ -1340,7 +1340,7 @@
 91D:\my_object\game_play\node_modules\caniuse-lite\data\features\document-scrollingelement.js133224998925197216 0
 90D:\my_object\game_play\node_modules\caniuse-lite\data\features\mdn-text-decoration-line.js133224998925575956 0
 63D:\my_object\game_play\node_modules\supports-color\package.json133224998930895781 0
-47D:\my_object\game_play\dist\dragon.df5f5f1f.png133225040902564492 0
+47D:\my_object\game_play\dist\dragon.df5f5f1f.png133225043643438176 0
 55D:\my_object\game_play\node_modules\stable\package.json133224998930855925 0
 59D:\my_object\game_play\node_modules\css-select\lib\index.js133224998927051016 0
 52D:\my_object\game_play\node_modules\stable\README.md133224998930855925 0
@@ -2966,7 +2966,7 @@
 59D:\my_object\game_play\node_modules\@parcel\hash\browser.js133224998912456555 0
 84D:\my_object\game_play\node_modules\caniuse-lite\data\features\css-grid-animation.js133224998924922414 0
 73D:\my_object\game_play\node_modules\caniuse-lite\data\features\css-has.js133224998924922414 0
-45D:\my_object\game_play\dist\hero.9a5cefb2.png133225040902564492 0
+45D:\my_object\game_play\dist\hero.9a5cefb2.png133225043643478048 0
 56D:\my_object\game_play\node_modules\@parcel\hash\LICENSE133224998912456555 0
 77D:\my_object\game_play\node_modules\caniuse-lite\data\features\css-hyphens.js133224998924932382 0
 87D:\my_object\game_play\node_modules\caniuse-lite\data\features\css-image-orientation.js133224998924932382 0
@@ -4266,6 +4266,6 @@
 47D:\my_object\game_play\node_modules\.bin\terser133224998910598314 0
 51D:\my_object\game_play\node_modules\.bin\terser.cmd133224998910598314 0
 51D:\my_object\game_play\node_modules\.bin\terser.ps1133224998910608281 0
-45D:\my_object\game_play\dist\back.55557245.png133225040903003031 0
-45D:\my_object\game_play\dist\girl.d6a7c737.png133225040902584433 0
-47D:\my_object\game_play\dist\tigger.53f4948d.png133225040902564492 0
+45D:\my_object\game_play\dist\back.55557245.png133225043643896644 0
+45D:\my_object\game_play\dist\girl.d6a7c737.png133225043643438176 0
+47D:\my_object\game_play\dist\tigger.53f4948d.png133225043643438176 0
