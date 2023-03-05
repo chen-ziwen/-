@@ -1,6 +1,4 @@
-
 // 创建一个精灵图类
-// 在外部去改变精灵图方向和移动
 export default class SpriteLab {
     protected x: number; // 精灵图x坐标
     protected y: number;// 精灵图y坐标
@@ -10,9 +8,10 @@ export default class SpriteLab {
     protected img: string; // 精灵的图片
     protected image: HTMLImageElement; // 图片对象
     protected frameIndex: number; // 精灵图索引
-    protected frameCount: number; // 精灵图总帧数
-    protected tickCount: number; // 计数器，用于控制动画速度
+    private frameCount: number; // 精灵图总帧数
+    private tickCount: number; // 计数器，用于控制动画速度
     protected ticksFrame: number; // 每帧需要多少次计数器更新，默认为0
+    protected direction: { [key: string]: boolean }; // 精灵图的四个方向
     constructor(options: SpriteLab) {
         this.x = options.x;
         this.y = options.y;
@@ -20,12 +19,18 @@ export default class SpriteLab {
         this.width = options.width;
         this.height = options.height;
         this.img = options.img;
+        this.image = new Image();
+        this.image.src = this.img;
         this.frameIndex = 0;
         this.frameCount = options.frameCount;
         this.tickCount = 0;
         this.ticksFrame = options.ticksFrame || 0;
-        this.image = new Image();
-        this.image.src = this.img;
+        this.direction = {
+            top: false,
+            bottom: false,
+            left: false,
+            right: false,
+        }
     }
 
     // 更新精灵图的状态
@@ -34,10 +39,13 @@ export default class SpriteLab {
         this.tickCount++;
         if (this.tickCount > this.ticksFrame) {
             this.tickCount = 0;
-            if (this.frameIndex < this.frameCount - 1) {
-                this.frameIndex++;
-            } else {
-                this.frameIndex = 0;
+            // 只要有一个方向为true，就执行帧动画
+            if (Object.values(this.direction).some(x => x)) {
+                if (this.frameIndex < this.frameCount - 1) {
+                    this.frameIndex++;
+                } else {
+                    this.frameIndex = 0;
+                }
             }
         }
     }

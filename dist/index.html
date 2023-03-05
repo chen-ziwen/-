@@ -158,7 +158,7 @@
       this[globalName] = mainExports;
     }
   }
-})({"eWzQh":[function(require,module,exports) {
+})({"wKdYW":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
@@ -574,8 +574,8 @@ function hmrAccept(bundle, id) {
 
 },{}],"l7cOz":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _role = require("./action/role");
-var _roleDefault = parcelHelpers.interopDefault(_role);
+var _createRole = require("./action/create_role");
+var _createRoleDefault = parcelHelpers.interopDefault(_createRole);
 // 因为四个方向的素材帧图片素材都为下左右上，所以内部设置好方向就好了
 var _girlPng = require("./assets/girl.png"); // 8帧女孩
 var _girlPngDefault = parcelHelpers.interopDefault(_girlPng);
@@ -583,19 +583,18 @@ var _heroPng = require("./assets/hero.png"); // 3帧武士
 var _heroPngDefault = parcelHelpers.interopDefault(_heroPng);
 var _dragonPng = require("./assets/dragon.png"); // 龙4帧
 var _dragonPngDefault = parcelHelpers.interopDefault(_dragonPng);
-const role = new (0, _roleDefault.default)({
+var _tiggerPng = require("./assets/tigger.png"); // 老虎4帧
+var _tiggerPngDefault = parcelHelpers.interopDefault(_tiggerPng);
+const role = new (0, _createRoleDefault.default)({
     x: 0,
     y: 0,
     width: 48,
     height: 96,
     img: (0, _girlPngDefault.default),
     frameCount: 8,
-    ticksFrame: 5,
-    realX: 3,
-    realY: 3
+    ticksFrame: 5
 });
-console.log("role", role);
-const hero = new (0, _roleDefault.default)({
+const hero = new (0, _createRoleDefault.default)({
     x: 0,
     y: 0,
     width: 32,
@@ -604,190 +603,44 @@ const hero = new (0, _roleDefault.default)({
     frameCount: 3,
     ticksFrame: 5
 });
-const dragon = new (0, _roleDefault.default)({
+const dragon = new (0, _createRoleDefault.default)({
     x: 0,
     y: 0,
     width: 48,
-    height: 60,
+    height: 61,
     img: (0, _dragonPngDefault.default),
     frameCount: 4,
     ticksFrame: 5
 });
+const tigger = new (0, _createRoleDefault.default)({
+    x: 0,
+    y: 0,
+    width: 48,
+    height: 61,
+    img: (0, _tiggerPngDefault.default),
+    frameCount: 4,
+    ticksFrame: 3,
+    realX: 5,
+    realY: 5
+});
 // 创建canvas上下文
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-function game() {
+function gamePlay() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    role.update(); // 更新人物状态
-    role.render(ctx); // 渲染人物到画布
-    // dragon.update();
-    // dragon.render(ctx);
-    // hero.update();
+    // role.render(ctx); // 渲染人物到画布
+    // role.update(); // 更新人物状态
+    dragon.render(ctx);
+    dragon.update();
     // hero.render(ctx);
-    requestAnimationFrame(game);
+    // hero.update();
+    // tigger.render(ctx);
+    // tigger.update();
+    requestAnimationFrame(gamePlay);
 }
-game();
+gamePlay();
 
-},{"./action/role":"4cnRL","./assets/girl.png":"cMMSW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./assets/hero.png":"6I8k2","./assets/dragon.png":"f1c8B"}],"4cnRL":[function(require,module,exports) {
-// 定义一个角色类
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _sprite = require("./sprite"); // 精灵图类
-var _spriteDefault = parcelHelpers.interopDefault(_sprite);
-class CreateRole extends (0, _spriteDefault.default) {
-    constructor(options){
-        super(options); // 继承精灵图类的属性
-        this.realX = options.realX || 3;
-        this.realY = options.realY || 3;
-        this.speedX = 0;
-        this.speedY = 0;
-        this.direction = {
-            top: false,
-            bottom: false,
-            left: false,
-            right: false
-        };
-        // 监听键盘按下事件
-        document.addEventListener("keydown", (e)=>{
-            switch(e.key){
-                // 精灵图下左右上
-                case "s":
-                    this.direction.bottom = true;
-                    break;
-                case "a":
-                    this.direction.left = true;
-                    break;
-                case "d":
-                    this.direction.right = true;
-                    break;
-                case "w":
-                    this.direction.top = true;
-                    break;
-            }
-        });
-        document.addEventListener("keyup", (e)=>{
-            switch(e.key){
-                // 精灵图下左右上
-                case "s":
-                    this.direction.bottom = false;
-                    this.frameIndex = 0; // 让索引回到第一张
-                    this.speedY = 0; // 偏移值重新赋值为0
-                    break;
-                case "a":
-                    this.direction.left = false;
-                    this.frameIndex = 0;
-                    this.speedX = 0;
-                    break;
-                case "d":
-                    this.direction.right = false;
-                    this.frameIndex = 0;
-                    this.speedX = 0;
-                    break;
-                case "w":
-                    this.direction.top = false;
-                    this.frameIndex = 0;
-                    this.speedY = 0;
-                    break;
-            }
-        });
-    }
-    // 判断运动方向和人物行动方向
-    lockDirection() {
-        if (this.direction.bottom) {
-            this.speedX = 0;
-            this.speedY = this.realY;
-            this.top = 0; // 精灵图第一行
-        } else if (this.direction.top) {
-            this.speedX = 0;
-            this.speedY = -this.realY;
-            this.top = this.height * 3; // 精灵图第四行
-        } else if (this.direction.left) {
-            this.speedY = 0;
-            this.speedX = -this.realX;
-            this.top = this.height; // 精灵图第而二行
-        } else if (this.direction.right) {
-            this.speedY = 0;
-            this.speedX = this.realX;
-            this.top = this.height * 2; // 精灵图第三行
-        }
-    }
-    update() {
-        super.update(); // 调用精灵类的方法 更新索引
-        this.lockDirection();
-        this.x += this.speedX;
-        this.y += this.speedY;
-    }
-}
-exports.default = CreateRole;
-
-},{"./sprite":"9GTRl","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9GTRl":[function(require,module,exports) {
-// 创建一个精灵图类
-// 在外部去改变精灵图方向和移动
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-class SpriteLab {
-    constructor(options){
-        this.x = options.x;
-        this.y = options.y;
-        this.top = 0;
-        this.width = options.width;
-        this.height = options.height;
-        this.img = options.img;
-        this.frameIndex = 0;
-        this.frameCount = options.frameCount;
-        this.tickCount = 0;
-        this.ticksFrame = options.ticksFrame || 0;
-        this.image = new Image();
-        this.image.src = this.img;
-    }
-    // 更新精灵图的状态
-    update() {
-        // 限制精灵图的切换频率 达到控制动作速度的效果
-        this.tickCount++;
-        if (this.tickCount > this.ticksFrame) {
-            this.tickCount = 0;
-            if (this.frameIndex < this.frameCount - 1) this.frameIndex++;
-            else this.frameIndex = 0;
-        }
-    }
-    // 渲染到画布
-    render(ctx) {
-        ctx.drawImage(this.image, this.frameIndex * this.width, this.top, this.width, this.height, this.x, this.y, this.width, this.height);
-    }
-}
-exports.default = SpriteLab;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"cMMSW":[function(require,module,exports) {
+},{"./assets/girl.png":"cMMSW","./assets/hero.png":"6I8k2","./assets/dragon.png":"f1c8B","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./assets/tigger.png":"9RBH3","./action/create_role":"ilE2f"}],"cMMSW":[function(require,module,exports) {
 module.exports = require("ec586169eecb8d").getBundleURL("iKUmX") + "girl.d6a7c737.png" + "?" + Date.now();
 
 },{"ec586169eecb8d":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -830,12 +683,174 @@ module.exports = require("37baa4a240972264").getBundleURL("iKUmX") + "hero.9a5ce
 },{"37baa4a240972264":"lgJ39"}],"f1c8B":[function(require,module,exports) {
 module.exports = require("83abb1bd50c23c26").getBundleURL("iKUmX") + "dragon.df5f5f1f.png" + "?" + Date.now();
 
-},{"83abb1bd50c23c26":"lgJ39"}]},["eWzQh","l7cOz"], "l7cOz", "parcelRequireb608")
+},{"83abb1bd50c23c26":"lgJ39"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"9RBH3":[function(require,module,exports) {
+module.exports = require("60278b2601ad9ec4").getBundleURL("iKUmX") + "tigger.53f4948d.png" + "?" + Date.now();
+
+},{"60278b2601ad9ec4":"lgJ39"}],"ilE2f":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _sprite = require("./sprite"); // 精灵图类
+var _spriteDefault = parcelHelpers.interopDefault(_sprite);
+class CreateRole extends (0, _spriteDefault.default) {
+    constructor(options){
+        super(options); // 继承精灵图类的属性
+        this.realX = options.realX || 3;
+        this.realY = options.realY || 3;
+        this.speedX = 0;
+        this.speedY = 0;
+        // 监听键盘按下事件
+        document.addEventListener("keydown", (e)=>{
+            switch(e.key){
+                // 精灵图下左右上
+                case "s":
+                    this.direction.bottom = true;
+                    break;
+                case "a":
+                    this.direction.left = true;
+                    break;
+                case "d":
+                    this.direction.right = true;
+                    break;
+                case "w":
+                    this.direction.top = true;
+                    break;
+            }
+        });
+        document.addEventListener("keyup", (e)=>{
+            switch(e.key){
+                case "s":
+                    this.direction.bottom = false;
+                    this.frameIndex = 0; // 让索引回到第一张
+                    this.speedY = 0; // 移动速度重置为0
+                    break;
+                case "a":
+                    this.direction.left = false;
+                    this.frameIndex = 0;
+                    this.speedX = 0;
+                    break;
+                case "d":
+                    this.direction.right = false;
+                    this.frameIndex = 0;
+                    this.speedX = 0;
+                    break;
+                case "w":
+                    this.direction.top = false;
+                    this.frameIndex = 0;
+                    this.speedY = 0;
+                    break;
+            }
+        });
+    }
+    // 判断运动方向和人物行动方向
+    lockDirection() {
+        if (this.direction.bottom) {
+            this.speedX = 0;
+            this.speedY = this.realY;
+            this.top = 0; // 精灵图第一行对应向下动作
+        } else if (this.direction.top) {
+            this.speedX = 0;
+            this.speedY = -this.realY;
+            this.top = this.height * 3; // 精灵图第四行对应向上动作
+        } else if (this.direction.left) {
+            this.speedY = 0;
+            this.speedX = -this.realX;
+            this.top = this.height; // 精灵图第而二行对应向左动作
+        } else if (this.direction.right) {
+            this.speedY = 0;
+            this.speedX = this.realX;
+            this.top = this.height * 2; // 精灵图第三行对应向右动作
+        }
+    }
+    update() {
+        super.update(); // 调用精灵类的方法 更新索引
+        this.lockDirection(); // 改变运动方向
+        this.x += this.speedX;
+        this.y += this.speedY;
+    }
+}
+exports.default = CreateRole;
+
+},{"./sprite":"9GTRl","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9GTRl":[function(require,module,exports) {
+// 创建一个精灵图类
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+class SpriteLab {
+    constructor(options){
+        this.x = options.x;
+        this.y = options.y;
+        this.top = 0;
+        this.width = options.width;
+        this.height = options.height;
+        this.img = options.img;
+        this.image = new Image();
+        this.image.src = this.img;
+        this.frameIndex = 0;
+        this.frameCount = options.frameCount;
+        this.tickCount = 0;
+        this.ticksFrame = options.ticksFrame || 0;
+        this.direction = {
+            top: false,
+            bottom: false,
+            left: false,
+            right: false
+        };
+    }
+    // 更新精灵图的状态
+    update() {
+        // 限制精灵图的切换频率 达到控制动作速度的效果
+        this.tickCount++;
+        if (this.tickCount > this.ticksFrame) {
+            this.tickCount = 0;
+            // 只要有一个方向为true，就执行帧动画
+            if (Object.values(this.direction).some((x)=>x)) {
+                if (this.frameIndex < this.frameCount - 1) this.frameIndex++;
+                else this.frameIndex = 0;
+            }
+        }
+    }
+    // 渲染到画布
+    render(ctx) {
+        ctx.drawImage(this.image, this.frameIndex * this.width, this.top, this.width, this.height, this.x, this.y, this.width, this.height);
+    }
+}
+exports.default = SpriteLab;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["wKdYW","l7cOz"], "l7cOz", "parcelRequireb608")
 
 </script>
 <style>.back-box {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background: url("back.55557245.png") 0 0 / cover no-repeat;
 }
 

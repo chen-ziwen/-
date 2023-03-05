@@ -15,11 +15,12 @@
 </body>
 
 <script type="module">
-    import CreateRole from './action/role';
+    import CreateRole from './action/create_role';
     // 因为四个方向的素材帧图片素材都为下左右上，所以内部设置好方向就好了
     import imgUrl from './assets/girl.png'; // 8帧女孩
     import heroUrl from './assets/hero.png'// 3帧武士
     import dragonUrl from './assets/dragon.png'; // 龙4帧
+    import tiggerUrl from './assets/tigger.png'; // 老虎4帧
     const role = new CreateRole({
         x: 0, // x坐标
         y: 0, // y坐标
@@ -28,10 +29,10 @@
         img: imgUrl, // 图片路径
         frameCount: 8, // 总共多少帧
         ticksFrame: 5, // 动画切换帧的速率
-        realX: 3, // 左右移动速度
-        realY: 3, // 上下移动速度
+        // realX: 3, // 左右移动速度
+        // realY: 3, // 上下移动速度
     });
-    console.log('role', role);
+
     const hero = new CreateRole({
         x: 0,
         y: 0,
@@ -46,33 +47,50 @@
         x: 0,
         y: 0,
         width: 48,
-        height: 60,
+        height: 61,
         img: dragonUrl,
         frameCount: 4,
         ticksFrame: 5,
+    })
+
+    const tigger = new CreateRole({
+        x: 0,
+        y: 0,
+        width: 48,
+        height: 61,
+        img: tiggerUrl,
+        frameCount: 4,
+        ticksFrame: 3,
+        realX: 5,
+        realY: 5,
     })
     // 创建canvas上下文
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext("2d");
 
-    function game() {
+    function gamePlay() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        role.update(); // 更新人物状态
-        role.render(ctx); // 渲染人物到画布
-        // dragon.update();
-        // dragon.render(ctx);
-        // hero.update();
+        // role.render(ctx); // 渲染人物到画布
+        // role.update(); // 更新人物状态
+
+        dragon.render(ctx);
+        dragon.update();
+
         // hero.render(ctx);
-        requestAnimationFrame(game);
+        // hero.update();
+
+        // tigger.render(ctx);
+        // tigger.update();
+        requestAnimationFrame(gamePlay);
     }
-    game();
+    gamePlay();
 
 
 </script>
 <style>
     .back-box {
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         background: url(./assets/back.png) no-repeat;
         background-size: cover;
     }
